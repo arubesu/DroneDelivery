@@ -3,6 +3,9 @@ using DroneDelivery.Models;
 
 namespace DroneDelivery.Services;
 
+/// <summary>
+/// Service for planning drone trips to deliver packages to specified locations.
+/// </summary>
 public class TripPlanner
 {
     public Drone[] Drones { get;  }
@@ -20,6 +23,10 @@ public class TripPlanner
         _remainingLocations = sortedLocations;
     }
 
+    /// <summary>
+    /// Plans trips for drones to deliver packages to specified locations.
+    /// </summary>
+    /// <returns>An array of Trip objects representing the planned trips.</returns>
     public Trip[] Plan()
     {
         var trips = new List<Trip>();
@@ -47,6 +54,10 @@ public class TripPlanner
         return plannedTrips;
     }
 
+    /// <summary>
+    /// Prints the planned trips grouped by drone.
+    /// </summary>
+    /// <returns>A string containing the formatted information of the planned trips.</returns>
     public string Print()
     {
         var plannedTripsGroupedByDrone = _plannedTrips.GroupBy(t => t.Drone.Model);
@@ -84,7 +95,14 @@ public class TripPlanner
             .First();
     }
 
-    private Trip FindTripWithMaxLocations(Location[] locations,  Drone drone)
+    /// <summary>
+    /// Finds and returns a Trip object with the maximum number of locations a given drone can cover
+    /// based on its capacity, considering the weight of each location using a sliding window approach.
+    /// </summary>
+    /// <param name="locations">Array of locations to consider for the trip.</param>
+    /// <param name="drone">The drone for which the trip is planned.</param>
+    /// <returns>A Trip object representing the planned trip for the drone with maximum locations.</returns>
+    public Trip FindTripWithMaxLocations(Location[] locations,  Drone drone)
     {
         var trip = new Trip(drone);
         var droneCapacity = drone.Capacity;

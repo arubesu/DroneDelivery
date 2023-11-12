@@ -4,6 +4,11 @@ namespace DroneDelivery.Utils;
 
 public static class Deserializer
 {
+    /// <summary>
+    /// Reads an input file and deserializes Drone and Location data.
+    /// </summary>
+    /// <param name="filePath">The path to the input file.</param>
+    /// <returns>A tuple containing arrays of Drone and Location objects.</returns>
    public static (Drone[], Location[]) Deserialize(string filePath)
     {
         var lines = File.ReadLines(filePath);
