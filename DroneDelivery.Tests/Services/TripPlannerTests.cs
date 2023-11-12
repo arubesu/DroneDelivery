@@ -76,4 +76,41 @@ public class TripPlannerTests
         Assert.IsNotNull(printedPlan);
         Assert.AreEqual(expectedPlan, printedPlan);
     }
+    
+    [Test]
+    public void FindTripWithMaxLocations_ValidData_ReturnsValidTrip()
+    {
+        // Arrange
+        var drone = new Drone("Drone", 250);
+
+        var locations = new[]
+        {
+            new Location("LocationA", 200),
+            new Location("LocationB", 150),
+            new Location("LocationC", 50),
+            new Location("LocationD", 150),
+            new Location("LocationE", 100),
+            new Location("LocationF", 200),
+            new Location("LocationG", 50),
+            new Location("LocationH", 80),
+            new Location("LocationI", 70),
+            new Location("LocationJ", 50),
+            new Location("LocationK", 30),
+            new Location("LocationL", 20),
+            new Location("LocationM", 50),
+            new Location("LocationN", 30),
+            new Location("LocationO", 20),
+            new Location("LocationP", 90),
+        };
+
+        var planner = new TripPlanner(new []{drone}, locations);
+
+        // Act
+        var result = planner.FindTripWithMaxLocations(locations, drone);
+
+        // Assert
+        Assert.IsNotNull(result);
+        Assert.AreEqual(result.Locations.Count, 6);
+        Assert.AreEqual(result.Locations.Sum(x => x.Weight), 240);
+    }
 }
